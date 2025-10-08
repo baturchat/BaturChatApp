@@ -69,22 +69,30 @@ export default function Auth() {
     try {
       if (isLogin) {
         await login(email.trim(), password);
-        Alert.alert('Sukses', 'Login berhasil!', [
-          { text: 'OK', onPress: () => router.replace('/(tabs)') }
-        ]);
-      } else {
-        await register(email.trim(), password, displayName.trim());
-        Alert.alert('Sukses', 'Registrasi berhasil! Selamat datang di BaturChat!', [
-          { text: 'OK', onPress: () => router.replace('/(tabs)') }
-        ]);
-      }
-    } catch (error: any) {
-      console.error('Auth error:', error);
-      Alert.alert('Error', error.message || 'Terjadi kesalahan. Silakan coba lagi.');
-    } finally {
-      setLoading(false);
+      // ❌ HAPUS BAGIAN INI:
+      // Alert.alert('Sukses', 'Login berhasil!', [
+      //   { text: 'OK', onPress: () => router.replace('/(tabs)') }
+      // ]);
+      
+      // ✅ GANTI DENGAN: Biarkan AuthContext yang handle navigasi
+      console.log('✅ Login berhasil!');
+    } else {
+      await register(email.trim(), password, displayName.trim());
+      // ❌ HAPUS BAGIAN INI:
+      // Alert.alert('Sukses', 'Registrasi berhasil! Selamat datang di BaturChat!', [
+      //   { text: 'OK', onPress: () => router.replace('/(tabs)') }
+      // ]);
+      
+      // ✅ GANTI DENGAN: Biarkan AuthContext yang handle navigasi
+      console.log('✅ Registrasi berhasil!');
     }
-  };
+  } catch (error: any) {
+    console.error('Auth error:', error);
+    Alert.alert('Error', error.message || 'Terjadi kesalahan. Silakan coba lagi.');
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleForgotPassword = async () => {
     if (!email) {
